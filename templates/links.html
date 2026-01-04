@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h1 style="text-align: center;">Nagwa Tutors Resources</h1>
+
+<table border="1" cellpadding="10" cellspacing="0" style="width: 100%; text-align: center;">
+    <thead>
+        <tr>
+            <th>Description</th>
+            <th>Link</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in resources_links %}
+        <tr>
+            <td>{{ item.title }}</td>
+            <td>
+                {% if item.url %}
+                    <a href="{{ item.url }}" target="_blank">Open</a>
+                {% else %}
+                    –
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

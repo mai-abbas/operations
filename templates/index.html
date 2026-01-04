@@ -1,0 +1,8 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 80vh; text-align: center;">
+    <h1 style="margin-bottom: 20px; color: #0056b3;">Nagwa Classes</h1>
+    <img src="{{ url_for('static', filename='logo.png') }}" alt="Nagwa Logo" class="logo" style="max-width: 200px;">
+</div>
+{% endblock %}

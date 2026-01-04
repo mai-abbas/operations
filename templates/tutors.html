@@ -1,0 +1,78 @@
+{% extends "layout.html" %}
+
+{% block title %}Tutors - Nagwa Classes{% endblock %}
+
+{% block content %}
+<h1>Tutors List</h1>
+
+<form method="get" action="{{ url_for('tutors') }}">
+
+    <input type="text"
+           name="name"
+           placeholder="Search by name"
+           value="{{ request.args.get('name','') }}">
+
+    <input type="text"
+           name="email"
+           placeholder="Search by email"
+           value="{{ request.args.get('email','') }}">
+
+    <input type="text"
+           name="subject"
+           placeholder="Search by subject"
+           value="{{ request.args.get('subject','') }}">
+
+    <!-- Grade search (EG01, EG07, G11...) -->
+    <input type="text"
+           name="stage_range"
+           placeholder="Search by grade (EG01, EG02, EG07, G11)"
+           value="{{ request.args.get('stage_range','') }}">
+
+    <!-- Stage dropdown -->
+    <select name="stage">
+        <option value="">All Stages</option>
+        <option value="Lower Primary" {% if request.args.get('stage')=='Lower Primary' %}selected{% endif %}>Lower Primary</option>
+        <option value="Higher Primary" {% if request.args.get('stage')=='Higher Primary' %}selected{% endif %}>Higher Primary</option>
+        <option value="Preparatory" {% if request.args.get('stage')=='Preparatory' %}selected{% endif %}>Preparatory</option>
+        <option value="Secondary" {% if request.args.get('stage')=='Secondary' %}selected{% endif %}>Secondary</option>
+    </select>
+
+    <!-- Status dropdown -->
+    <select name="status">
+        <option value="">All Status</option>
+        <option value="Active" {% if request.args.get('status')=='Active' %}selected{% endif %}>Active</option>
+        <option value="Backup" {% if request.args.get('status')=='Backup' %}selected{% endif %}>Backup</option>
+        <option value="New Hire" {% if request.args.get('status')=='New Hire' %}selected{% endif %}>New Hire</option>
+        <option value="Resigned" {% if request.args.get('status')=='Resigned' %}selected{% endif %}>Resigned</option>
+    </select>
+
+    <button type="submit">Search</button>
+</form>
+
+<table border="1" style="width:100%; text-align:center;">
+    <tr>
+        <th>Name</th>
+        <th>Tutor ID</th>
+        <th>HR ID</th>
+        <th>Subject</th>
+        <th>Status</th>
+        <th>Stage</th>
+        <th>Stage Range</th>
+        <th>Email</th>
+        <th>Mobile</th>
+    </tr>
+    {% for tutor in tutors %}
+    <tr>
+        <td>{{ tutor['Tutor Name'] }}</td>
+        <td>{{ tutor['Tutor ID'] }}</td>
+        <td>{{ tutor['HR ID'] }}</td>
+        <td>{{ tutor['Subject'] }}</td>
+        <td>{{ tutor['Status'] }}</td>
+        <td>{{ tutor['Stage'] }}</td>
+        <td>{{ tutor['Stage Range'] }}</td>
+        <td>{{ tutor['Email'] }}</td>
+        <td>{{ tutor['Mobile Number'] }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
