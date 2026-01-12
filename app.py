@@ -6,9 +6,6 @@ import re
 
 app = Flask(__name__)
 
-# --- Load tutors Excel ---
-tutors_df = pd.read_excel("data/tutors.xlsx")
-tutors_list = tutors_df.to_dict(orient="records")
 
 # --- Home page ---
 @app.route("/")
@@ -60,6 +57,10 @@ def links():
 # --- Tutors page with multi-field search ---
 @app.route("/tutors")
 def tutors():
+    # 🔁 ALWAYS read the latest Excel file
+    tutors_df = pd.read_excel("data/tutors.xlsx")
+    tutors_list = tutors_df.to_dict(orient="records")
+
     name_query = request.args.get("name", "").strip().lower()
     email_query = request.args.get("email", "").strip().lower()
     subject_query = request.args.get("subject", "").strip().lower()
@@ -87,7 +88,6 @@ def tutors():
         if status_query and status_query != str(t.get("Status", "")).strip().lower():
             match = False
 
-        # ✅ THIS is where extract_grades() is used
         if stage_range_query:
             tutor_grades = extract_grades(t.get("Stage Range", ""))
             if stage_range_query not in tutor_grades:
@@ -99,5 +99,7 @@ def tutors():
     return render_template("tutors.html", tutors=filtered_tutors)
 
 
+
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
+
